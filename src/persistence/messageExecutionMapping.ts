@@ -1,6 +1,6 @@
 import {LRUCache} from "lru-cache";
 
-export default class MessageExecutionMapping {
+class MessageExecutionMapping {
     private readonly messageToExecutionId: LRUCache<string, string>;
     constructor() {
         this.messageToExecutionId = new LRUCache<string, string>({
@@ -17,3 +17,5 @@ export default class MessageExecutionMapping {
     }
 
 }
+
+export default new MessageExecutionMapping();

@@ -16,7 +16,7 @@ interface ExecutionResponse {
     }
 }
 
-export default class PromptCmsClient {
+class PromptCMSClient {
     private readonly promptId: string;
     private readonly apiKey: string;
     private readonly baseApiUrl = 'https://www.promptcms.ai/api/v1/partner/ai';
@@ -69,3 +69,5 @@ export default class PromptCmsClient {
         return result.data;
     }
 }
+
+export default new PromptCMSClient();
