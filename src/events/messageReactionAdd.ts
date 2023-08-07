@@ -14,16 +14,16 @@ export default async (reaction: MessageReaction | PartialMessageReaction, user: 
             return;
         }
     }
-    const executionId = messageToExecutionId.get(reaction.message.id);
-    if (executionId) {
+    const messageExecution = await messageToExecutionId.get(reaction.message.id);
+    if (messageExecution) {
         if (reaction.emoji.name === '👍') {
             // positive
             const reactionAuthor = reaction.message.author!.id;
-            await promptCmsClient.scoreExecution(executionId, reactionAuthor, 1);
+            await promptCmsClient.scoreExecution(messageExecution.prompt_execution_id, reactionAuthor, 1);
         } else if (reaction.emoji.name === '👎') {
             // negative
             const reactionAuthor = reaction.message.author!.id;
-            await promptCmsClient.scoreExecution(executionId, reactionAuthor, 0);
+            await promptCmsClient.scoreExecution(messageExecution.prompt_execution_id, reactionAuthor, 0);
         }
     }
 };

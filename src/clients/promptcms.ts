@@ -1,11 +1,6 @@
 import axios from "axios";
 import {Message} from "discord.js";
 
-export interface ScoreData {
-    score: number,
-    reason: string
-}
-
 interface ExecutionResponse {
     data: {
         execution_id: string;
@@ -51,7 +46,7 @@ class PromptCMSClient {
         }
     }
 
-    private async execute(fields: object) {
+    public async execute(fields: object) {
         const apiUrl = `${this.baseApiUrl}/execute?prompt_id=${this.promptId}&fields=${encodeURIComponent(
             JSON.stringify(fields)
         )}`;
@@ -62,11 +57,6 @@ class PromptCMSClient {
             },
         });
         return result;
-    }
-
-    public async getMessageScore(message: Message): Promise<ExecutionResponse["data"]> {
-        const result = await this.execute({ msg: message.content });
-        return result.data;
     }
 }
 

@@ -8,6 +8,10 @@ export const data = new SlashCommandBuilder()
 
 export async function execute(interaction: BaseCommandInteraction) {
     console.log(`Enabling for channel ${interaction.channelId}.`)
-    enabledChannels.add(interaction.channelId);
-    await interaction.reply('Enabled!');
+    if (await enabledChannels.is_enabled(interaction.guildId!, interaction.channelId)) {
+        await interaction.reply({content: 'I am already enabled for this channel.', ephemeral: true});
+    } else {
+        await enabledChannels.enable(interaction.guildId!, interaction.channelId);
+        await interaction.reply({content: 'Enabled!', ephemeral: true});
+    }
 }

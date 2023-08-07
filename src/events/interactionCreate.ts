@@ -6,12 +6,6 @@ export default async (interaction: Interaction) => {
     console.log("Received interaction.");
     if (!interaction.isCommand()) return;
 
-    if (enabledChannels.has(interaction.channelId)) {
-        console.log("Channel is enabled!")
-    } else {
-        console.log("Channel is not enabled!")
-    }
-
     const command = commands.get(interaction.commandName);
 
     if (!command) return;
@@ -22,4 +16,13 @@ export default async (interaction: Interaction) => {
         console.error(error);
         await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
     }
+
+    // if (await enabledChannels.is_enabled(interaction.guildId!, interaction.channelId)) {
+    //     console.log("Channel is enabled!")
+    //
+    // } else {
+    //     console.log("Channel is not enabled!")
+    // }
+
+
 }

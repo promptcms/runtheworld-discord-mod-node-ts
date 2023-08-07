@@ -13,7 +13,10 @@
     "rootDir": "src",
     "resolveJsonModule": true,
     "strict": true,
-    "target": "ES2021"
+    "target": "ES2021",
+    "sourceMap": true,
+    "inlineSources": true,
+    "sourceRoot": "/"
   },
   "include": ["src"]
 }

@@ -1,19 +1,25 @@
-import {LRUCache} from "lru-cache";
+import prisma from "../clients/prisma";
 
 class MessageExecutionMapping {
-    private readonly messageToExecutionId: LRUCache<string, string>;
-    constructor() {
-        this.messageToExecutionId = new LRUCache<string, string>({
-            max: 500,
-        });
+    public async get(messageId: string) {
+        return prisma.message_prompt_execution.findUnique(
+            {
+                where: {
+                    message_id: messageId,
+                }
+            }
+        )
     }
 
-    public get(messageId: string) {
-        return this.messageToExecutionId.get(messageId);
-    }
-
-    public set(messageId: string, executionId: string) {
-        return this.messageToExecutionId.set(messageId, executionId);
+    public async set(messageId: string, executionId: string) {
+        return prisma.message_prompt_execution.create(
+            {
+                data: {
+                    message_id: messageId,
+                    prompt_execution_id: executionId,
+                }
+            }
+        )
     }
 
 }
