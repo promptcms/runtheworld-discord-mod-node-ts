@@ -11,9 +11,11 @@ export default async (message: Message) => {
         if (message.content.includes("?") || message.mentions.has(discordClient.user!.id)) {
             console.log("Answering question...")
             // const resultData = await promptCMSClient.execute({question: message.content});
-            const result = await superagentClient.execute({input: message.content});
+            // const result = await superagentClient.execute({input: message.content});
+            const result = await promptCMSClient.invokeAgent(message.content);
+            console.log(result);
             if (result) {
-                await message.reply(`${result.data}`);
+                await message.reply(`${result.data.output}`);
             } else {
                 await message.reply({content: 'Sorry, there seems to be a problem. Please try again later.'});
             }
