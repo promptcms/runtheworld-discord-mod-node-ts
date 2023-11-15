@@ -69,20 +69,19 @@ class PromptCMSClient {
         return result;
     }
 
-    public async invokeAgent(message: string, sessionId: string | undefined = undefined) {
+    public async invokeAgent(message: string, agentId: string, apiKey: string, sessionId: string | undefined = undefined) {
         const apiUrl = `${this.baseApiUrl}/agentic`;
 
         const {data: result} = await axios.post<AgentExecutionResponse>(apiUrl, {
             message: message,
-            agent_id: this.agentId,
+            agent_id: agentId,
             session_id: sessionId,
         }, {
             headers: {
-                Authorization: `Bearer ${this.apiKey}`,
+                Authorization: `Bearer ${apiKey}`,
             },
         });
         return result;
-
     }
 }
 
