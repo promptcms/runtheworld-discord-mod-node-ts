@@ -11,7 +11,8 @@ export default async (message: Message) => {
         const config = await guildConfig.get(message.guildId!);
         if (!config) {
             console.log("Not configured.");
-            await message.reply({content: 'Sorry, there seems to be a problem.'});
+            await message.reply({content: 'Sorry, I need to be configured before I respond to any questions.'});
+            return;
         }
         if (message.content.includes("?") || message.mentions.has(discordClient.user!.id) || message.channel.isThread()) {
             console.log("Answering question...")
