@@ -2,7 +2,6 @@ import promptCMSClient from "../clients/promptcms";
 import messageToExecutionId from "../persistence/messageExecutionMapping";
 import {Message} from "discord.js";
 import enabledChannels from "../persistence/enabledChannels";
-// import superagentClient from "../clients/superagent";
 import discordClient from "../index";
 import guildConfig from "../persistence/guildConfig";
 
