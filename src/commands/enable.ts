@@ -2,6 +2,7 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 import {BaseCommandInteraction, GuildMemberRoleManager} from "discord.js";
 import enabledChannels from "../persistence/enabledChannels";
 import guildConfig from '../persistence/guildConfig';
+import channelConfig from "../persistence/channelConfig";
 
 export const data = new SlashCommandBuilder()
     .setName('enable')
@@ -14,8 +15,10 @@ export const data = new SlashCommandBuilder()
 export async function execute(interaction: BaseCommandInteraction) {
     const memberRoles = interaction.member!.roles as GuildMemberRoleManager;
     if (memberRoles.cache.some((role: { name: string; }) => role.name === 'Admin')) {
-        const guildConfigExists = Boolean(await guildConfig.get(interaction.guildId!));
-        if (!guildConfigExists) {
+        const gConfig = await guildConfig.get(interaction.guildId!) || {};
+        const cConfig = await channelConfig.get(interaction.guildId!, interaction.channelId!) || {};
+        const config = {...gConfig, ...cConfig}
+        if (!config) {
             await interaction.reply({content: 'Please configure me first using the /configure command.', ephemeral: true});
         }
 
