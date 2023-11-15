@@ -14,6 +14,7 @@ model enabled_channels {
   channel_id String
 
   @@unique([guild_id, channel_id], map: "enabled_channels_unique_guild_channel")
+  @@index([guild_id])
 }
 
 model message_prompt_execution {

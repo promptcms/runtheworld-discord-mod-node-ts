@@ -18,7 +18,7 @@ export default async (message: Message) => {
             console.log("Answering question...")
             // const resultData = await promptCMSClient.execute({question: message.content});
             // const result = await superagentClient.execute({input: message.content});
-            const result = await promptCMSClient.invokeAgent(message.content, config?.api_key!, config?.agent_id!);
+            const result = await promptCMSClient.invokeAgent(message.content, config?.agent_id!, config?.api_key!);
             console.log(result);
             if (result) {
                 await message.reply(`${result.data.output}`);
