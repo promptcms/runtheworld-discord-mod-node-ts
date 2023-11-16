@@ -9,18 +9,18 @@ export default async (message: Message) => {
     console.log("Handling messageCreate event for message ID: ", message.id)
     if (message.author.bot) return;
     if (await enabledChannels.is_enabled(message.guildId!, message.channel.isThread() ? message.channel.parentId! : message.channelId!)) {
-        const gConfig = await guildConfig.get(message.guildId!) || {};
-        const cConfig = await channelConfig.get(message.guildId!, message.channelId!) || {};
-        const config = {...gConfig, ...cConfig}
+        const gConfig = await guildConfig.get(message.guildId!);
+        const cConfig = await channelConfig.get(message.guildId!, message.channelId!);
+        const config = {...gConfig, ...cConfig};
         // If no config, or missing API Key/Agent ID, do nothing.
-        if (!config || (!config.apiKey || !config.agentId)) {
+        if (!config || (!config.api_key || !config.agent_id)) {
             console.log("Not configured.");
             await message.reply({content: 'Sorry, I need to be configured before I respond to any questions.'});
             return;
         }
         if (message.content.includes("?") || message.mentions.has(discordClient.user!.id) || message.channel.isThread()) {
-            console.log("Answering question...")
-            const result = await promptCMSClient.invokeAgent(message.content, config?.agent_id!, config?.api_key!, message.channel.isThread() ? message.channel.id : undefined);
+            console.log("Answering question...");
+            const result = await promptCMSClient.invokeAgent(message.content, config.agent_id, config.api_key, message.channel.isThread() ? message.channel.id : undefined);
             if (result) {
                 await message.reply(`${result.data.output}`);
             } else {

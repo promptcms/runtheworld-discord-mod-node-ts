@@ -15,8 +15,8 @@ export const data = new SlashCommandBuilder()
 export async function execute(interaction: BaseCommandInteraction) {
     const memberRoles = interaction.member!.roles as GuildMemberRoleManager;
     if (memberRoles.cache.some((role: { name: string; }) => role.name === 'Admin')) {
-        const gConfig = await guildConfig.get(interaction.guildId!) || {};
-        const cConfig = await channelConfig.get(interaction.guildId!, interaction.channelId!) || {};
+        const gConfig = await guildConfig.get(interaction.guildId!);
+        const cConfig = await channelConfig.get(interaction.guildId!, interaction.channelId!);
         const config = {...gConfig, ...cConfig}
         if (!config) {
             await interaction.reply({content: 'Please configure me first using the /configure command.', ephemeral: true});

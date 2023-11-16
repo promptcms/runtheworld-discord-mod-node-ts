@@ -5,8 +5,10 @@ class ChannelConfig {
         return prisma.channel_config.findUnique(
             {
                 where: {
-                    guild_id: guildId,
-                    channel_id: channelId,
+                    guild_id_channel_id: {
+                        guild_id: guildId,
+                        channel_id: channelId,
+                    }
                 }
             }
         )

@@ -11,8 +11,8 @@ export const data = new SlashCommandBuilder()
 export async function execute(interaction: BaseCommandInteraction) {
     const memberRoles = interaction.member!.roles as GuildMemberRoleManager;
     if (memberRoles.cache.some((role: { name: string; }) => role.name === 'Admin')) {
-        const gConfig = await guildConfig.get(interaction.guildId!) || {};
-        const cConfig = await channelConfig.get(interaction.guildId!, interaction.channelId!) || {};
+        const gConfig = await guildConfig.get(interaction.guildId!);
+        const cConfig = await channelConfig.get(interaction.guildId!, interaction.channelId!);
         const config = {...gConfig, ...cConfig}
         const enabledChannelIds = await enabledChannels.list(interaction.guildId!) || [];
         console.log(`API Key: ${config?.api_key}\nAgent Id: ${config?.agent_id}\nEnabled Channel IDs:\n${enabledChannelIds.map((chan) => chan.channel_id).join('\n')}`);
