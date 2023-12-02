@@ -15,9 +15,19 @@ class ChannelConfig {
     }
 
     public async set(guildId: string, channelId: string, apiKey: string, agentId: string) {
-        return prisma.channel_config.create(
+        return prisma.channel_config.upsert(
             {
-                data: {
+                where: {
+                    guild_id_channel_id: {
+                        guild_id: guildId,
+                        channel_id: channelId,
+                    }
+                },
+                update: {
+                    api_key: apiKey,
+                    agent_id: agentId,
+                },
+                create: {
                     guild_id: guildId,
                     channel_id: channelId,
                     api_key: apiKey,

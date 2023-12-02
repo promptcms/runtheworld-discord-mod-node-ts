@@ -9,8 +9,10 @@ export default async (message: Message) => {
     console.log("Handling messageCreate event for message ID: ", message.id)
     if (message.author.bot) return;
     if (await enabledChannels.is_enabled(message.guildId!, message.channel.isThread() ? message.channel.parentId! : message.channelId!)) {
-        const gConfig = await guildConfig.get(message.guildId!);
-        const cConfig = await channelConfig.get(message.guildId!, message.channelId!);
+        const [gConfig, cConfig] = await Promise.all([
+            guildConfig.get(message.guildId!),
+            channelConfig.get(message.guildId!, message.channelId!)
+        ]);
         const config = {...gConfig, ...cConfig};
         // If no config, or missing API Key/Agent ID, do nothing.
         if (!config || (!config.api_key || !config.agent_id)) {
